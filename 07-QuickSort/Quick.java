@@ -2,9 +2,11 @@ import java.util.*;
 public class Quick {
 	public static void main(String[] args) {
 		int[] test = new int[10];
-		for (int i = 0; i < test.length; i++) 
-			test[i] = 10;
-		System.out.println(select(test, 6));
+		for (int i = 0; i < 10; i++) 
+			test[i] = (int) (Math.random() * 10);
+		System.out.println(Arrays.toString(test));
+		System.out.println(select(test, 3));
+		System.out.println(Arrays.toString(test));
 
 	}
 	private static int partition(int pivot, int[] a, int low, int high) {
@@ -52,5 +54,11 @@ public class Quick {
 			System.out.println("only from 0 to a.length - 1; you picked a num out of range; will return -1 arbitrarily");
 			return -1;
 		}
+ 	}
+ 	public static int[] sort (int[] a) {
+ 		if (a.length == 1)
+ 			return a;
+ 		int pivot = 0 + (int) (Math.random() * ((a.length - 0) + 1)); 
+
  	}
 }
