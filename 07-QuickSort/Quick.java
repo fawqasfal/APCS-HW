@@ -34,30 +34,9 @@ public class Quick {
 		//to the left will be less
 		return wall; //the pivot index has the pivot-th largest # 
 	}
-	private static int select(int[] a, int k, int low, int high) {
-		//trying to find the kth biggest element (a.length -1  = biggest; 0 = smallest)
-		if (a.length == 1)
-			return a[0];
-		int pivot = low + (int) (Math.random() * ((high - low) + 1)); //random index - this index will be the correct sorted num  
-		pivot = partition(pivot, a, low, high);
 
-		if (pivot > k) //too big!
-			return select(a, k, low, pivot - 1);
-		if (pivot < k) //too small!
-			return select(a, k, pivot + 1, high);
-		else
-			return a[k];
-	}
-	public static int select(int[] a, int k) {
-		try {
-			return select(a, k, 0, a.length - 1);
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("only from 0 to a.length - 1; you picked a num out of range; will return -1 arbitrarily");
-			return -1;
-		}
- 	}
  	private static void sort(int[] a, int low, int high) {
- 		//sort by recursively partition()ing everything in the array
+ 		//sort by recursively partition()ing everything in the array 
  		if (low >= high) //youve reached an array with size less than or equal to 0 
  			return;
  		int pivot = low + (int) (Math.random() * ((high - low) + 1));
