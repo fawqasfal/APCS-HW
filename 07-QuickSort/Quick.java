@@ -1,10 +1,11 @@
 import java.util.*;
 public class Quick {
 	public static void main(String[] args) {
-		int[] test = new int[10];
-		for (int i = 0; i < test.length; i++) 
-			test[i] = 10;
-		System.out.println(select(test, 6));
+		int size = 10 + (int) (Math.random() * (100 - 10) + 1);
+		int[] test = new int[size];
+		for (int i = 0; i < size; i++) 
+			test[i] = 10 + (int) (Math.random() * (100 - 10) + 1);
+		System.out.println(medofmeds(test, 0, test.length - 1));
 
 	}
 	public static int partition(int pivot, int[] a, int low, int high) {
@@ -24,27 +25,36 @@ public class Quick {
 				wall++; //wall represents index of the wall value, so we have to add 1 to it now that we pushed it to the right
 			}
 		}
+		//clusters pivot duplicates together ... dont know exactly how much of a potential speed boost this can bring vs the extra code needed?
+		int rwall = wall;
+		for (int j = wall; j < high; j++) {
+			if (a[j] == a[high]) { 
+				a[j] = a[rwall];
+				a[rwall] = item;
+				rwall++;
+			}
+		}
 		int finswap = a[high];
 		a[high] = a[wall];
 		a[wall] = finswap; 
 		//finally, swap wall and pivot value so that everything to the right of pivot will be greater than it, and everything
 		//to the left will be less
-		return wall; //the pivot index has the pivot-th largest # 
+		return (rwall + wall) / 2; //the pivot index has the pivot-th largest # 
 	}
 
 	private static int select(int[] a, int k, int low, int high) {
-		if (a.length == 1)
-			return a[0];
+		if (low >= high)
+			return a[low];
 		//trying to find the kth biggest element (a.length -1  = biggest; 0 = smallest)
 		int pivot = low + (int) (Math.random() * ((high - low) + 1)); //random index - this index will be the correct sorted num  
 		pivot = partition(pivot, a, low, high);
-
-		if (pivot > k) //too big!
-			return select(a, k, low, pivot - 1);
-		if (pivot < k) //too small!
-			return select(a, k, pivot + 1, high);
-		else
+		if (pivot == k)
 			return a[k];
+		else if (pivot > k) //too big!
+			return select(a, k, low, pivot - 1);
+		else //too small!
+			return select(a, k, pivot + 1, high);
+
 	}
 	public static int select(int[] a, int k) {
 		try {
@@ -54,6 +64,21 @@ public class Quick {
 			return -1;
 		}
  	}
+
+ 	public static int medofmeds(int[] a, int left, int right) {
+ 
+ 		int meds = (int) Math.ceil((right - left) / 5.0);
+ 		for (int i = 0; i < meds; i++) {
+ 			int subleft = left + i * 5;
+ 			int subright = subleft + 4;
+ 			subright = subright > right ? right : subright;
+ 			int mednum = select(a, subleft + (subright - subleft) / 2, subleft, subright);
+ 			a[subleft + (subright - subleft) / 2] = a[left + i];
+ 			a[left + i] = mednum;
+ 		}
+ 		return select(a, meds / 2, left, left + meds - 1);
+ 	}
+
  }
 
  	
