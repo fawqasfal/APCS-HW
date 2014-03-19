@@ -1,5 +1,5 @@
 *.class
-*.java~
+*~
 .DS_Store
 # Package Files #
 *.jar
