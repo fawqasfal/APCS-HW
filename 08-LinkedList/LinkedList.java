@@ -1,21 +1,28 @@
 import java.util.*;
 public class LinkedList<T> {
 	private Node<T> head;
-		
+	private int length;
 	public LinkedList() {
 		this.head = null;
+		this.length = 0;
 	}
 	public LinkedList(Node<T> head) {
 		this.head = head;
+		this.length = 1;
 	}
+	
 	public boolean isEmpty() {
 		return this.head == null;
 	}
+
 	public T addHead(T nodeData) {
 		this.head = new Node<T>(nodeData, head);
+		this.length++;
 		return this.head.getData();
 	}
+
 	public T addLast(T nodeData) {
+		this.length++;
 		if (this.isEmpty()) 
 			addHead(nodeData);
 		Node<T> currentNode = head;
@@ -25,9 +32,10 @@ public class LinkedList<T> {
 	}
 
 	public T addAfter(int loc, T nodeData) {
+		if (loc == this.length) this.addLast(nodeData);
 		Node<T> currentNode = this.indexCatcher(loc);
 		if (currentNode == null) return null;
-
+		this.length++;
 		if (!currentNode.hasNext()) {
 			Node<T> nextNode = new Node<T>(nodeData, null);
 			return currentNode.setNext(nextNode).getData();
@@ -45,60 +53,83 @@ public class LinkedList<T> {
 	}
 
 	public T set(int loc, T nodeData) {
+		if (loc == 0) return this.addHead(nodeData);
 		Node<T> currentNode = this.indexCatcher(loc);
 		if (currentNode == null) return null;
 		return currentNode.setData(nodeData);	
 	}
+
 	public T remove(int loc) {
 		Node<T> currentNode = this.indexCatcher(loc - 1);
 		if (currentNode == null) return null;
 		if (!currentNode.hasNext())  return null;
+		this.length--;
 		return currentNode.setNext(currentNode.getNext().getNext()).getData();
 	}
+
 	public int find(T data) {
 		Node<T> currentNode = this.head;
 		int counter = 0;
-		while (currentNode.hasNext()) {
+		while (currentNode != null) {
 			if (currentNode.getData().equals(data))
 				return counter;
+			currentNode = currentNode.getNext();
 			counter++;
 		}
-		if (!currentNode.hasNext()) 
-			System.out.println(String.format("%s not found.", data.toString())); //ideally throw exception here
-		return -1;
-	}
-	public int length() {
-		Node<T> currentNode = this.head;
-		int counter = 0;
-		while (currentNode.hasNext())
-			counter++;
+		if (currentNode == null) 
+			return -1;
 		return counter;
+	}
+
+	public int size() {
+		return this.length;
 	}
 
 	private Node<T> indexCatcher(int loc) {
 		Node<T> currentNode = this.head;
 		for (int i = 0; i < loc; i++) {
-			if (!currentNode.hasNext()) {
-				System.out.println(String.format("Invalid index : %d.\n The highest possible index is %d.\n",loc, i));
-				return null;
+			if (currentNode == null || !currentNode.hasNext()) {
+				throw new IndexOutOfBoundsException(String.format("Invalid index : %d.\nThe highest possible index is %d.\n",loc, i));
 			}
 			currentNode = currentNode.getNext();
 		}
 		return currentNode;
 	}
 	public String toString() {
-		if (this.isEmpty()) return "[]";
 		String answer = "[";
-		Node<T> currentNode = head;
-		while (currentNode.hasNext()) {
-			answer += currentNode.getData().toString();
-			if (!currentNode.getNext().hasNext())
-				answer += ", ";
+		Node<T> currentNode = this.head;
+		while (currentNode != null) {
+			answer += currentNode.getData();
+			if (currentNode.hasNext())
+				answer += ",";
 			currentNode = currentNode.getNext();
 		}
-		answer = answer + "]";
+		answer += "]";
 		return answer;
 	}
+	public static void main(String[] args) 	{
+		/*	wanted to make my own test class but i got lazy half way through
+			took this from some guy on CMU and messed with it a bit to make it work with my code
+		*/ 
+	    LinkedList<String> list = new LinkedList<String>();
+	    list.addHead("p");
+	    list.addHead("a");
+	    list.addHead("e");
+	    list.addHead("h");
+	    System.out.println(list);	
+	    System.out.println(list.get(0));	
+	    list.addLast("s");
+	    System.out.println(list);
+	    int eFind = list.find("e");
+	   	System.out.println(eFind);
+	    System.out.println(list.size());	
+
+	    list.set(4, "yy");
+	   	System.out.println(list);	
+
+	   	list.remove(list.find("p"));
+	    System.out.println(list);
+		}
 }
 
 
