@@ -7,7 +7,7 @@ public class LinkedList<T> {
 		this.length = 0;
 	}
 	public LinkedList(Node<T> head) {
-		this.head = head;
+		this.head = 0;
 		this.length = 1;
 	}
 	
