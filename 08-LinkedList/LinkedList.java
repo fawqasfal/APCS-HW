@@ -3,7 +3,7 @@ public class LinkedList<T> {
 	private Node<T> head;
 	private int length;
 	public LinkedList() {
-		this.head = 0;
+		this.head = null;
 		this.length = 0;
 	}
 	public LinkedList(Node<T> head) {
