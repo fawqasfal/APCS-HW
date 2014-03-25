@@ -9,3 +9,6 @@ what if its not a set that works with primitives/object version of primitives?
 
 or do you just mean that if one would call the constructor with no args, just make a 1-elem'd set with 0?  again with the type problem
 
+
+
+LinkedList w/ iterator is in xx-lliterator/ folder 
