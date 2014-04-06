@@ -1,16 +1,16 @@
 import java.util.*;
-public class myList<T> implements Iterable{
+public class MyList<T> implements Iterable{
 	private Object[] array; 
-	public myList() {
+	public MyList() {
 		array = new Object[0];
 	}
-	public myList(int size) {
+	public MyList(int size) {
 		array = new Object[size]; 
 	}
 	public static void main(String[] args) {
 	}
 	public Iterator<T> iterator() {
-		return new myListIterator<T>(this);
+		return new MyListIterator<T>(this);
 	}
 	public int size() {
 		return array.length;
@@ -103,10 +103,10 @@ public class myList<T> implements Iterable{
 		}
 		return false;
 	}
-	private class myListIterator<T> implements Iterator<T> {
-		myList<T> data;
+	private class MyListIterator<T> implements Iterator<T> {
+		MyList<T> data;
     	int place;
-    	public myListIterator(myList<T> L){
+    	public MyListIterator(MyList<T> L){
        		data = L;
         	place = 0;
     	}

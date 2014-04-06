@@ -1,11 +1,12 @@
-public class MyStack {
+public class MyStack<T> {
 
     private Node top;
     private int numElts;
-
+    private MyList<T> elts;
     public MyStack(){
 	top = null;
 	numElts = 0;
+	elts = new MyList<T>();
     }
 
     public void push(String s){
