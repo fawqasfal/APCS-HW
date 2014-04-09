@@ -1,3 +1,4 @@
+import java.util.*;
 public class MyStack {
 
     private int top;
@@ -23,6 +24,8 @@ public class MyStack {
 		if (numElts == 0) return null;
 		String s = array[top];
 		array[top] = null;
+		numElts--;
+		top--;
 		return s;
     }
 
@@ -40,7 +43,9 @@ public class MyStack {
 	}
 
     public String toString() {
-	String s="";
+
+	if (this.isEmpty()) return "";
+		String s="";
 	
 	for (int i = 0; i < array.length && array[i] != null; i++) {
 		s += array[i] + ", ";
