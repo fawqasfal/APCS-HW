@@ -15,6 +15,7 @@ public class MyStack {
 		if (top == array.length - 1) {
 			String[] newarr = new String[numElts + 10];
 			for (int i = 0; i < array.length; i++) newarr[i] = array[i];
+			array = newarr;
 		}	
 		top++;
 		this.array[top] = s;
