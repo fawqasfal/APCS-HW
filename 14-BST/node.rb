@@ -15,26 +15,30 @@ class Node
   	@left = left
   	@right = right
   	not_even_node = ""
-  	not_node += "NOT NODE : Your child assigned to #{inspect} aren't nodes, it's a left child with {left.class}. " if left
-  	not_node += "\n NOT NODE : Your child assigned to #{inspect} aren't nodes, it's a right child with {left.class}. " if right
-  	raise(ArgumentError, not_even_node) unless ((left == nil or left.class == Node) and (right == nil or right.class == Node))
+  	not_node += "NOT NODE : Your child assigned to #{inspect} aren't nodes, it's a left child with {left.class}. " unless left.nil?
+  	not_node += "\n NOT NODE : Your child assigned to #{inspect} aren't nodes, it's a right child with {left.class}. " unless right.nil?
+  	raise(ArgumentError, not_even_node) unless ((left.nil? or left.class == Node) and (right.nil? or right.class == Node))
   	#everything fine?
   	@data = data
   end
 
   def left=(newnode)
   	not_even_node = "Your left child assigned to #{inspect} isnt't a node, it's a #{newnode.class}." 
-  	raise(ArgumentError, not_even_node) unless newnode.class == Node or newnode == nil
+  	raise(ArgumentError, not_even_node) unless newnode.class == Node or newnode.nil?
   	bad_set = "You tried setting #{inspect}'s left child to #{newnode.inspect}, but your node requires type #{@data.class}," +
   	"and the left child's data type is #{newnode.data.class}."
-  	raise(ArgumentError, bad_set) unless newnode == nil or newnode.data.class == @data.class
+  	raise(ArgumentError, bad_set) unless newnode.nil? or newnode.data.class == @data.class
   	@left = newnode
   end
   
   def right=(newnode)
   	not_even_node = "Your right child assigned to #{inspect} isnt't a node, it's a #{newnode.class}." 
-  	raise(ArgumentError, not_even_node) unless newnode.class == Node or newnode == nil
+  	raise(ArgumentError, not_even_node) unless newnode.class == Node or newnode.nil?
   	@right = newnode
+  end
+
+  def nil?
+  	return @data == nil
   end
 
   def inspect
