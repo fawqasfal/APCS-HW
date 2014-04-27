@@ -25,10 +25,7 @@ class Node
   def left=(newnode)
   	not_even_node = "Your left child assigned to #{inspect} isnt't a node, it's a #{newnode.class}." 
   	raise(ArgumentError, not_even_node) unless newnode.class == Node or newnode.nil?
-  	bad_set = "You tried setting #{inspect}'s left child to #{newnode.inspect}, but your node requires type #{@data.class}," +
-  	"and the left child's data type is #{newnode.data.class}."
-  	raise(ArgumentError, bad_set) unless newnode.nil? or newnode.data.class == @data.class
-  	@left = newnode
+    @left = newnode
   end
   
   def right=(newnode)
@@ -41,7 +38,10 @@ class Node
   	return @data == nil
   end
 
-  def inspect
+  def to_s
   	@data.inspect
   end
+
+  
+
 end
