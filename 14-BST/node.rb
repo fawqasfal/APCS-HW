@@ -34,13 +34,9 @@ class Node
   	@right = newnode
   end
 
-  def nil?
-  	return @data == nil
-  end
-
-  def to_s
-  	@data.inspect
-  end
+  def nil?; return @data == nil; end
+  def inspect;to_s;end
+  def to_s;@data.inspect;end
 
   
 

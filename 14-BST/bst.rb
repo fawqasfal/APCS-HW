@@ -59,7 +59,10 @@ class BST
 		node = node_parent_search(data) #see privates_bst.rb for what node_parent_search does in detail
 		return self if node.nil? or not node[:node].nil?  #if node has been found by node_parent_search then data already exists. no dup nodes allowed
 		@size += 1
-		@root = Node.new(data) if node[:parent].nil? #if node and parent are nil, then its empty
+		if node[:parent].nil? #if node and parent are nil, then its empty
+			@root = Node.new(data)
+			return self
+		end
 		#otherwhise, you have node[:parent] as the closest leaf/subleaf-with-one-child. now just determine the correct child for that parent
 		node[:parent].right = Node.new(data) if node[:parent].data < data 
 		node[:parent].left = Node.new(data) if node[:parent].data > data
