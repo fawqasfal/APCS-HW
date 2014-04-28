@@ -5,11 +5,12 @@ require './privates_bst.rb'
 # methods:
 # bst initialize( root: root_var ) -> returns bst. initial root node optional
 #root_var is DATA that gets passed in; the constructor takes that data and turns it into the root instance variable NODE. 
-# node search ( data ) -> searches tree for data and returns first node found containing data, nil otherwise.
-# node insert ( data ) -> inserts node into tree. if already exists, return nil. if not comparable with other data, ArgumentError raised.
-# void delete ( data ) -> deletes node containing data if such node exists, does nothing and returns nil otherwise.
+# node search( data ) -> searches tree for data and returns first node found containing data, nil otherwise. 
+# BST +( data ) -> inserts node into tree. returns self. if not comparable with other data, ArgumentError raised.
+# BST -( data ) -> deletes node containing data if such node exists, does nothing otherwise. return self
 # array to_a() -> traverses bst and inserts elements in array. array is unsorted
 # String to_s () -> returns string interpretation of tree. pretty ugly cause all the levels start at the same start point
+# operator overloads : 
 
 class BST
 	public
@@ -18,6 +19,7 @@ class BST
 	def empty?; return @size == 0; end
 	def to_a; arr_builder!; return @arr_build; end
 	def inspect; return to_s; end
+
   def initialize root: nil
   	@root = Node.new(root)
   	@size = @root.nil? ? 0 : 1 #if root is nil, then size is 0; else its 1
@@ -52,25 +54,29 @@ class BST
 		return nil
 	end
 	
-	def insert(data)
+
+	def +(data)
 		node = node_parent_search(data) #see privates_bst.rb for what node_parent_search does in detail
-		return nil if node.nil? or not node[:node].nil?  #if node has been found by node_parent_search then data already exists. no dup nodes allowed
+		return self if node.nil? or not node[:node].nil?  #if node has been found by node_parent_search then data already exists. no dup nodes allowed
 		@size += 1
-		return (@root = Node.new(data)) if node[:parent].nil? #if node and parent are nil, then its empty
+		@root = Node.new(data) if node[:parent].nil? #if node and parent are nil, then its empty
 		#otherwhise, you have node[:parent] as the closest leaf/subleaf-with-one-child. now just determine the correct child for that parent
-		return (node[:parent].right = Node.new(data)) if node[:parent].data < data 
-		return (node[:parent].left = Node.new(data)) if node[:parent].data > data
+		node[:parent].right = Node.new(data) if node[:parent].data < data 
+		node[:parent].left = Node.new(data) if node[:parent].data > data
+		return self
 	end
 
-	def delete (data)
+
+	def -(data)
 		node = node_parent_search(data)
-		return nil if node.nil? or node[:node].nil? #node hasnt been found -- return nil
+		return self if node.nil? or node[:node].nil? #node hasnt been found -- return self
 		currnode = node[:node]; parent = node[:parent] #node found
 		del_with_1_or_0_children!(currnode, parent) if currnode.left.nil? or currnode.right.nil? #has one or zero children
 		if not currnode.left.nil? and not currnode.right.nil? #two children
 			del_node = find_first_1_or_0_children!(currnode)
 			del_with_1_or_0_children!(del_node[:node], del_node[:parent]) 
 		end
+		return self
 	end
 
 end
