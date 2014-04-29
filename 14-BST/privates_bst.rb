@@ -2,7 +2,7 @@ require './node.rb'
 
 class BST
   private 
-  attr_reader :arr_build #used for building tree traversal
+  attr_accessor :root, :size, :arr_build #used for building tree traversal
 
   def arr_builder!(currnode: @root)
 		@arr_build = [] if currnode == @root
