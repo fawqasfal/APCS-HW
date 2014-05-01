@@ -1,15 +1,26 @@
 require './node.rb'
 
 class BST
-  private 
-  attr_accessor :root, :size, :arr_build #used for building tree traversal
+  private
+  attr_accessor :root, :size, :arr_build #used for building tree traversals for to_a and to_s
+  def str_builder!(currnode: @root, level: 0)
+  	##returns 2d arr, where each subarr is a list of elements in arr.index[subarr]'s tree level. 
+  	@arr_build = [] if currnode == @root #"un-set" @arr_build from the changes previous str_builder! or arr_builder! calls may have made
+  	return if currnode.nil?
+  	str_builder!(currnode: currnode.left, level: level + 1)
+  	@arr_build[level] += [currnode.data] if not @arr_build[level].nil? # add to the level's subarray
+  	@arr_build[level] = [currnode.data] if @arr_build[level].nil? #if this level's subarray doesnt exist, create it 
+  	str_builder!(currnode: currnode.right, level: level + 1) 
+  	return @arr_build
+  end
 
   def arr_builder!(currnode: @root)
-		@arr_build = [] if currnode == @root
+  	@arr_build = [] if currnode == @root
 		return if currnode.nil?
-		@arr_build += [currnode.data]
 		arr_builder!(currnode: currnode.left)
+		@arr_build += [currnode.data]
 		arr_builder!(currnode: currnode.right)
+		return @arr_build
 	end
 
   def del_with_1_or_0_children!(node, parent)
