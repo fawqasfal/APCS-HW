@@ -4,11 +4,11 @@
 #include <time.h>
 
 void int_to_float(int arr[], float result[]) {
-	while((*(result++) = (float) *(arr++)));
+	while( (*(result++) = (float) *(arr++)) );
 } 
 
 void float_to_int(float arr[], int result[]) {
-	while((*(result++) = (int) *(arr++)));
+	while( (*(result++) = (int) *(arr++)) );
 } 
 
 void swap(float *a, float *b) {
