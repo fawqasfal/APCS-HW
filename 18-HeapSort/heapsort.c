@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <time.h>
 
-void int_to_float(int arr[], float result[]) {
-	while( (*(result++) = (float) *(arr++)) );
+void int_to_float(int arr[], float result[], int size) {
+	int i = 0;
+	while (i++ < size) result[i - 1] = arr[i - 1];
 } 
 
-void float_to_int(float arr[], int result[]) {
-	while( (*(result++) = (int) *(arr++)) );
+void float_to_int(float arr[], int result[], int size) {
+	int i = 0;
+	while (i++ < size) result[i - 1] = arr[i - 1];
 } 
 
 void swap(float *a, float *b) {
@@ -58,9 +60,9 @@ void heapsort_f(float arr[], int arrsize) {
 
 void heapsort_i(int arr[], int arrsize) {
 	float float_cpy[arrsize]; 
-	int_to_float(arr,float_cpy);
+	int_to_float(arr,float_cpy, arrsize);
 	heapsort_f(float_cpy, arrsize);
-	float_to_int(float_cpy, arr);
+	float_to_int(float_cpy, arr, arrsize);
 }
 
 void gen_array(int result[], int size) {
